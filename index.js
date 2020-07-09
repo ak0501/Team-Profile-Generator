@@ -3,16 +3,14 @@ const inquirer = require('inquirer');
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
-const Inern = require('./lib/Intern');
-// const generatePage = require('./templates');
-const {
-    type
-} = require('os');
+const Intern = require('./lib/Intern');
+const generatePage = require('./src/page-template');
+const writeFile = require('./src/generate-site')
 
 let manager = [];
 let engineer = [];
 let intern = [];
-let teamArr = {
+let employeeArr = {
     manager,
     engineer,
     intern
@@ -59,7 +57,7 @@ function Prompt() {
                         {
                             type: 'confirm',
                             name: 'anotherEntry',
-                            message: "Would like to add another employee?",
+                            message: "What you like to add another employee?",
                             default: false
                         }
                     ])
@@ -67,10 +65,7 @@ function Prompt() {
                         office,
                         anotherEntry
                     }) => {
-
-
-
-                        manager.push(new Manager(employee, ID, email, office));
+                        manager.push(new Manager(employee, id, email, office))
                         // console.log(employeeArr)
                         if (anotherEntry) {
                             return Prompt();
@@ -136,4 +131,4 @@ Prompt()
     })
     .then(pageHTML => {
         return writeFile(pageHTML)
-    });
+    })
